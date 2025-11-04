@@ -1,10 +1,8 @@
-# Eazy Link for Obsidian
+# Easy Link for Obsidian
 
 [中文版](./README_zh.md)
 
-Eazy Link is a plugin for Obsidian designed to boost your note-taking efficiency by automatically converting URLs into titled Markdown links, formatting image links, or applying links to your selected text.
-
-![Eazy Link Demo](https://raw.githubusercontent.com/mnao/eazy-link-obsidian/master/demo.gif)
+Easy Link is a plugin for Obsidian designed to boost your note-taking efficiency by automatically converting URLs into titled Markdown links, formatting image links, or applying links to your selected text.
 
 ## Core Features
 

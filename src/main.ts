@@ -3,8 +3,9 @@ import { App, Plugin, PluginSettingTab, requestUrl, Setting } from "obsidian";
 const DEFAULT_SETTINGS = {
 	autoFormat: true,
 };
+const IGNORE_REG = [/<$/, /^\[.*\]:\s*/];
 
-export default class MyPlugin extends Plugin {
+export default class EasyLinkPlugin extends Plugin {
 	settings: typeof DEFAULT_SETTINGS;
 
 	async onload() {
@@ -27,8 +28,18 @@ export default class MyPlugin extends Plugin {
 					editor.replaceSelection(`[${select}](${url.href})`);
 					return;
 				}
-				// 自动获取网页标题
+
 				const from = editor.getCursor("from");
+				// 处理需要跳过的情况
+				const lineText = editor.getLine(from.line);
+				for (let index = 0; index < this.ignore.length; index++) {
+					const reg = this.ignore[index];
+					if (lineText.match(reg)) {
+						editor.replaceSelection(clipboardText);
+						return;
+					}
+				}
+				// 自动获取网页标题
 
 				const placeholder = "[Parsing URL...]";
 				editor.replaceSelection(placeholder);
@@ -72,12 +83,15 @@ export default class MyPlugin extends Plugin {
 	async saveSettings() {
 		await this.saveData(this.settings);
 	}
+
+	// 需要跳过的情况
+	ignore: RegExp[] = IGNORE_REG;
 }
 
 class SettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+	plugin: EasyLinkPlugin;
 
-	constructor(app: App, plugin: MyPlugin) {
+	constructor(app: App, plugin: EasyLinkPlugin) {
 		super(app, plugin);
 		this.plugin = plugin;
 	}

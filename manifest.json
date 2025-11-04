@@ -6,6 +6,6 @@
 	"description": "Automatically formats pasted URLs into titled links, image links, or applies them to selected text.",
 	"author": "poenl",
 	"authorUrl": "https://github.com/poenl",
-	"fundingUrl": "https://github.com/poenl/eazy-link-obsidian",
+	"fundingUrl": "https://github.com/poenl/easy-link-obsidian",
 	"isDesktopOnly": false
 }

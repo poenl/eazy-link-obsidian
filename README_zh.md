@@ -1,10 +1,8 @@
-# Eazy Link for Obsidian (中文版)
+# Easy Link for Obsidian (中文版)
 
 [English Version](./README.md)
 
-Eazy Link 是一款为 Obsidian 设计的插件，它能自动将 URL 转换为带标题的 Markdown 链接、格式化图片链接，或将链接应用到您选中的文本上，从而提升您的笔记效率。
-
-![Eazy Link Demo](https://raw.githubusercontent.com/mnao/eazy-link-obsidian/master/demo.gif)
+Easy Link 是一款为 Obsidian 设计的插件，它能自动将 URL 转换为带标题的 Markdown 链接、格式化图片链接，或将链接应用到您选中的文本上，从而提升您的笔记效率。
 
 ## 核心功能
 
