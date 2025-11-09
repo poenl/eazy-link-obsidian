@@ -11,7 +11,9 @@
 		"importHelpers": true,
 		"isolatedModules": true,
 		"strictNullChecks": true,
-		"lib": ["DOM", "ESNext"]
+		"lib": ["DOM", "ESNext"],
+		"resolveJsonModule": true,
+		"esModuleInterop": true
 	},
 	"include": ["**/*.ts"]
 }

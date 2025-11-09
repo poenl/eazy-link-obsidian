@@ -1,7 +1,8 @@
-import { Editor, Plugin, requestUrl } from 'obsidian'
+import { Editor, Plugin, requestUrl, moment } from 'obsidian'
 import { loadingField, showLoading, removeLoading } from './loading'
 import { EditorView } from '@codemirror/view'
 import { SettingTab } from './settings'
+import { i18n } from './lang'
 
 const DEFAULT_SETTINGS = {
 	autoFormat: true,
@@ -15,6 +16,7 @@ export default class EasyLinkPlugin extends Plugin {
 
 	async onload() {
 		await this.loadSettings()
+		i18n(moment.locale())
 		this.registerEditorExtension(loadingField)
 
 		this.registerEvent(
