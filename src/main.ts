@@ -41,6 +41,7 @@ export default class EasyLinkPlugin extends Plugin {
 				}
 
 				const from = editor.getCursor('from')
+				const fromOffset = editor.posToOffset(from)
 				// 处理需要跳过的情况
 				const lineText = editor.getLine(from.line)
 				for (let index = 0; index < this.ignore.length; index++) {
@@ -53,12 +54,12 @@ export default class EasyLinkPlugin extends Plugin {
 				// 插入占位符
 				const placeholder = this.settings.placeholderText.replace('{url}', url.href)
 				if (this.settings.placeholderMode === 'decoration') {
-					showLoading(editorView, from.ch, from.ch, placeholder)
+					showLoading(editorView, fromOffset, fromOffset, placeholder)
 				} else if (this.settings.placeholderMode === 'text') {
 					editorView.dispatch({
 						changes: {
-							from: from.ch,
-							to: from.ch,
+							from: fromOffset,
+							to: fromOffset,
 							insert: placeholder
 						}
 					})
@@ -70,6 +71,7 @@ export default class EasyLinkPlugin extends Plugin {
 				}
 
 				const to = editor.getCursor('from')
+				let finalLink = clipboardText
 
 				// 自动获取网页标题
 				try {
@@ -81,19 +83,23 @@ export default class EasyLinkPlugin extends Plugin {
 						const titleMatch = html.match(/<title>(.*?)<\/title>/)
 						const title = titleMatch?.[1] ? titleMatch[1] : 'no title'
 
-						const finalLink = `[${title}](${url.href})`
+						finalLink = `[${title}](${url.href})`
 						editor.replaceRange(finalLink, from, to)
 					} else if (contentType && contentType.startsWith('image')) {
-						const finalLink = `![${url.pathname.replace(/.*\//, '')}](${url.href})`
+						finalLink = `![${url.pathname.replace(/.*\//, '')}](${url.href})`
 
 						editor.replaceRange(finalLink, from, to)
 					} else {
-						editor.replaceRange(clipboardText, from, to)
+						editor.replaceRange(finalLink, from, to)
 					}
 				} catch {
-					editor.replaceRange(clipboardText, from, to)
+					editor.replaceRange(finalLink, from, to)
 				} finally {
-					removeLoading(editorView, from.ch, from.ch)
+					removeLoading(editorView, fromOffset, fromOffset)
+					editor.setCursor({
+						line: from.line,
+						ch: from.ch + finalLink.length
+					})
 				}
 			})
 		)
